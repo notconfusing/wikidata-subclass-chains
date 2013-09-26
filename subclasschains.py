@@ -173,6 +173,7 @@ def makechains(count=False, doone=False):
                     #print sizechain_tree(masterchain)
                     printchain_tree(masterchain)
             counter += 1
+            print counter
     
         
     
@@ -185,35 +186,35 @@ def savedata():
     json.dump(masterchains, savefile)
     '''
 
+if __name__ == '__main__':
+    en_wikipedia = pywikibot.Site('en', 'wikipedia')
+    wikidata = en_wikipedia.data_repository()
+    if not wikidata.logged_in(): wikidata.login()
+    if not en_wikipedia.logged_in(): en_wikipedia.login()
 
-en_wikipedia = pywikibot.Site('en', 'wikipedia')
-wikidata = en_wikipedia.data_repository()
-if not wikidata.logged_in(): wikidata.login()
-if not en_wikipedia.logged_in(): en_wikipedia.login()
-   
-openfile = open('magnus_data.json','r')
-magnus_data = json.load(openfile)
-withsubclass = magnus_data['items']
-'''
-try:
-    magnus_query = urllib2.Request("http://208.80.153.172/api?q=claim[279]&props=279")
-    print 'opening...'
-    opener = urllib2.build_opener()
-    f = opener.open(magnus_query)
-    magnus_data = json.load(f)
+    openfile = open('magnus_data.json','r')
+    magnus_data = json.load(openfile)
     withsubclass = magnus_data['items']
-except:
-    print 'problem opening file lets use offline'
-'''
+    '''
+    try:
+        magnus_query = urllib2.Request("http://208.80.153.172/api?q=claim[279]&props=279")
+        print 'opening...'
+        opener = urllib2.build_opener()
+        f = opener.open(magnus_query)
+        magnus_data = json.load(f)
+        withsubclass = magnus_data['items']
+    except:
+        print 'problem opening file lets use offline'
+    '''
 
-    
-print 'lets make chains'
-#main datatype list of chain objects       
-masterchains = list()
-makechains(count=10000)
-print 'lets save'
-savedata()
-print 'i think i am done'
+
+    print 'lets make chains'
+    #main datatype list of chain objects       
+    masterchains = list()
+    makechains()
+    print 'lets save'
+    savedata()
+    print 'i think i am done'
 
             
             
