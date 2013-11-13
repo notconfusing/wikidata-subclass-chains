@@ -20,6 +20,13 @@ class wditem:
         except:
             raise
         
+    def name(self):
+        if self.label:
+            return self.label
+        else:
+            return str(self.qid)
+            
+        
 class chain:
     '''a list whose items are either wditems or a list of chains'''
     def __init__(self, wditem):
@@ -139,6 +146,7 @@ def make_and_tidy_chains(item):
     masterchains.append(newchain)
     masterchains[-1].subclasses = subclassestoadd
     for head in headstoremove:
+        print "about to invoke move, what's in head and what's its id"
         masterchains.remove(head)
 
 
